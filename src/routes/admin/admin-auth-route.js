@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {adminSignup, adminSignin, requireSignin} = require('../../controllers/admin/admin-auth-controller');
+const {adminSignup, adminSignin} = require('../../controllers/admin/admin-auth-controller');
 const { isRequestValidated, validateSignupRequest } = require("../../validators/auth-validator");
 
 

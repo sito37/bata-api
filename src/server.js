@@ -1,8 +1,11 @@
 const express = require('express')
 const env = require('dotenv')
 const mongoose = require('mongoose')
+
+// routes
 const authRouter = require('./routes/auth-route')
 const adminAuthRouter = require('./routes/admin/admin-auth-route')
+const categoryRouter = require('./routes/category')
 
 const app = express()
 
@@ -20,9 +23,9 @@ mongoose.connect(process.env.MONGODB)
 app.use(express.json())
 app.use('/api', authRouter)
 app.use('/api', adminAuthRouter)
+app.use('/api', categoryRouter)
 
 
-// routes
 
 
 
