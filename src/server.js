@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const authRouter = require('./routes/auth-route')
 const adminAuthRouter = require('./routes/admin/admin-auth-route')
 const categoryRouter = require('./routes/category')
+const productRouter = require('./routes/product')
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(express.json())
 app.use('/api', authRouter)
 app.use('/api', adminAuthRouter)
 app.use('/api', categoryRouter)
+app.use('/api', productRouter)
 
 
 
