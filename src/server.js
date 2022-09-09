@@ -7,6 +7,7 @@ const authRouter = require('./routes/auth-route')
 const adminAuthRouter = require('./routes/admin/admin-auth-route')
 const categoryRouter = require('./routes/category')
 const productRouter = require('./routes/product')
+const cartRouter = require('./routes/cart')
 
 const app = express()
 
@@ -26,6 +27,7 @@ app.use('/api', authRouter)
 app.use('/api', adminAuthRouter)
 app.use('/api', categoryRouter)
 app.use('/api', productRouter)
+app.use('/api', cartRouter)
 
 
 
