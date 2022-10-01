@@ -1,8 +1,9 @@
 const User = require('../../models/user-model')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 exports.adminSignup = (req, res) => {
-    User.findOne({ email: req.body.email }).exec((error, user) => {
+    User.findOne({ email: req.body.email }).exec( async (error, user) => {
         if (user) {
           res.status(400).json({
             message: "admin already exist",
@@ -10,12 +11,13 @@ exports.adminSignup = (req, res) => {
         }
     
         const { firstName, lastName, email, password } = req.body;
-    
+        
+        const hash_password = await bcrypt.hash(password, 10)
         const _user = new User({
           firstName,
           lastName,
           email,
-          password,
+          hash_password,
           userName: Math.random().toString(),
           role: 'admin'
         });
@@ -43,8 +45,8 @@ exports.adminSignin = (req, res) => {
 
     if(user){
         if(user.authenticate(req.body.password) && user.role === 'admin'){
-          const token = jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h'}) 
-
+          const token = jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '2d'}) 
+          res.cookie("token", token, {expiresIn: '2d' })
           const {_id, firstName, lastName, email, role, fullName} = user
           res.status(201).json({
             token,
@@ -60,3 +62,9 @@ exports.adminSignin = (req, res) => {
   })
 }
 
+exports.adminSignout = (req, res) => {
+  res.clearCookie('token')
+  res.status(200).json({
+    message: "Signout successfully...!"
+  })
+}
